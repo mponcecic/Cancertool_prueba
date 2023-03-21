@@ -1,0 +1,145 @@
+---
+title: "Prueba"
+author: "María Ponce"
+date: "2023-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, include = TRUE, results = 'hide',
+                      warning = FALSE, cache = TRUE)
+```
+
+
+```{r}
+############# LIBRARIES #############
+
+library(readxl)     # Load file
+library(survival)   # Surivival Analysis
+library(dplyr)      # Process data
+library(fabricatr)  # Divide data into quartiles
+
+library(ggplot2)    # Plots
+library(survminer)  # Survival plots
+library(ggthemes)   # Themes
+```
+
+
+## Introduction
+
+We use the tool named Cancertool. Using this tool we performed a basic statistical analysis using the Glinsky, Grasso, Taylor and TCGA databases. The analysis we wanted to performed was focused on the Gleason score of the genes PTEN, SOX9 and PML in the primary tumor group (PT). 
+
+*Grasso database does not include Gleason score.*
+
+The main objective of this file is to understand the basis of the DFS analysis which is performed on a regular basis in the Lab, to accomplish it we focused on the Glinsky database.
+
+The following websites were used: 
+
+> <https://cran.r-project.org/web/packages/survival/survival.pdf>
+> <https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/>
+> <https://bioconnector.github.io/workshops/r-survival.html#kaplan-meier_plots>
+> <https://www.r-bloggers.com/2021/08/log-rank-test-in-r-survival-curve-comparison/>
+> <https://whitlockschluter3e.zoology.ubc.ca/RExamples/Rcode_Chapter_21.html#hazard_ratio>
+> <https://rpkgs.datanovia.com/survminer/#installation-and-loading>
+
+```{r }
+############# LOAD DATASETS #############
+
+## Select Glinksy database per gene (sheet = 3)
+data_pml <- read_xlsx("1679306381_PCa_BasicAnalysis\\DiseaseFreeSurvival\\PML\\DFSRAWdata.xlsx", sheet = 3)
+# data_pten <- read_xlsx("1679306381_PCa_BasicAnalysis\\DiseaseFreeSurvival\\PTEN\\DFSRAWdata.xlsx", sheet = 3)
+# data_sox9 <- read_xlsx("1679306381_PCa_BasicAnalysis\\DiseaseFreeSurvival\\SOX9\\DFSRAWdata.xlsx", sheet = 3)
+
+# Verify
+colnames(data_pml)
+head(data_pml)
+
+############# PREPROCESSING #############
+
+# Recurrence status as numeric 1=0;censored and 2=1;event 
+data_pml$`Recurrence status` <- as.numeric(data_pml$`Recurrence status`)
+
+# Summary
+str(data_pml)
+
+# Sort data by time to recurrence
+data_pml %>% arrange(`Time to recurrence (months)`)
+
+############# DFS CURVE QUANTILES #############
+
+# Simplify version of the analysis 
+# based on the data found in the file
+
+### Kaplan - Meier survival curve ### 
+
+## Survival Object
+km_curve <- with(data_pml, Surv(`Time to recurrence (months)`,`Recurrence status`))
+print(km_curve)
+
+## Fit survival curve based on the Quartile variable
+km_fit <- survfit(Surv(`Time to recurrence (months)`,`Recurrence status`) ~ Quartile, data = data_pml)
+summary(km_fit)
+
+## Survival curves basic plot 
+plot(km_fit)
+
+### Log Rank test ratio ### 
+logrank <- survdiff(Surv(`Time to recurrence (months)`,`Recurrence status`) ~ Quartile, data = data_pml)
+## Summary log rank test
+print(logrank)
+## p-value
+print(logrank$pvalue)
+
+### Hazard ratio (Q1 vs Q4)### 
+HR <- (logrank$obs[1]/logrank$obs[4])/(logrank$exp[1]/logrank$exp[4])
+print(HR)
+## Proportional hazard regression model 
+# Log Rank ratio and HR can be obtained using this function
+HR_lab <- coxph(km_curve ~ Quartile,data = data_pml)
+summary(HR_lab)
+```
+
+
+```{r}
+############# ADVANCED PREPROCESSING #############
+data <- data_pml %>% mutate(data_pml,
+                        # Quantile variable
+                        Quantiles_div = split_quantile(`Log2 mRNA expression`,type = 4), # type = 4 = quantiles
+                        # Median variable
+                        Median_div = split_quantile(`Log2 mRNA expression`,type = 2) # type = 2 = median
+                ) 
+## Survival Object
+km_curve <- with(data, Surv(`Time to recurrence (months)`,`Recurrence status`))
+print(km_curve)
+
+## Fit survival curve based on the Quartile variable
+km_fit <- survfit(Surv(`Time to recurrence (months)`,`Recurrence status`) ~ Median_div, data = data)
+summary(km_fit)
+
+
+############# ADVANCED GRAPHICS #############
+ggsurvplot(km_fit, data = data, 
+            pval = TRUE,
+            ggtheme = theme_few()
+           )
+```
+
+
+
+```{r}
+# data_glinsky <- readxl::read_xlsx("CompleteRAWdata.xlsx", sheet = 2)
+# head(data_glinsky)
+# summary(data_glinsky)
+# 
+# data_grasso <- readxl::read_xlsx("CompleteRAWdata.xlsx", sheet = 3)
+# head(data_grasso)
+# summary(data_grasso)
+# 
+# data_taylor <- readxl::read_xlsx("CompleteRAWdata.xlsx", sheet = 4)
+# head(data_taylor)
+# summary(data_taylor)
+# 
+# data_tcga <- readxl::read_xlsx("CompleteRAWdata.xlsx", sheet = 5)
+# head(data_tcga)
+# summary(data_tcga)
+```

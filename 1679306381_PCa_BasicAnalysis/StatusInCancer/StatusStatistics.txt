@@ -1,0 +1,5 @@
+WARNING: Please, be careful with the local configuration, it MUST be in English format in order to avoid errors in the interpretation of the results. (Decimals must be separated by dots '.', and thousands by commas ',')
+GeneSymbol	Edgington's p-value	Taylor p-value	Taylor Adj p-value	Glinsky p-value	Glinsky Adj p-value	Grasso p-value	Grasso Adj p-value	TCGA p-value	TCGA Adj p-value
+PTEN	2.43632159600969e-05	0.00694015736794	0.01041023605191	NA	NA	4.02747046608102e-05	0.000120824113982431	NA	NA
+SOX9	0.462292190292699	0.31657083500144	0.31657083500144	NA	NA	0.64498227356064	0.64498227356064	NA	NA
+PML	0.0265472546642896	0.000892550097841149	0.00267765029352345	NA	NA	0.22952990828801	0.344294862432015	NA	NA
