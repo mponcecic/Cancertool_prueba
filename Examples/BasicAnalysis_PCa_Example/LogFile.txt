@@ -1,0 +1,4 @@
+Type of analysis: Basic analysis (Prostate) - Summary
+Average signal from all the transcripts
+Genes: PTEN, SOX9, PML
+Identifier: GeneSymbol

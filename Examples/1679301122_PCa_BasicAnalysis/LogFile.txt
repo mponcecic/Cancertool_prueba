@@ -1,0 +1,7 @@
+Type of analysis: Basic analysis (Prostate) - Custom analysis
+Genes: PTEN, SOX9, PML
+Identifier: GeneSymbol
+Datasets: glinsky;grasso;taylor;tcgaprostate
+Results: 
+_ Comparative gene expression levels by Tumor Type
+_ Comparative gene expression levels by Gleason Score

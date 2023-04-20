@@ -1,0 +1,4 @@
+Type of analysis: Correlation analysis (Prostate) - Summary
+Genes (list 1): PTEN
+Genes (list 2): SOX9, PPARGC1A
+Identifier: GeneSymbol

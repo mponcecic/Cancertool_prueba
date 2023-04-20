@@ -1,0 +1,5 @@
+hgnc_symbol	refseq_mrna
+PTEN	NM_000314
+SOX9	NM_000346
+PML	NM_002675
+PML	NM_033238

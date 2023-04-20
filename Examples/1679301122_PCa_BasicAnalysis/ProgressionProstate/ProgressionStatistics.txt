@@ -1,0 +1,5 @@
+WARNING: Please, be careful with the local configuration, it MUST be in English format in order to avoid errors in the interpretation of the results. (Decimals must be separated by dots '.', and thousands by commas ',')
+GeneSymbol	Edgington's p-value	ANOVA (Taylor)	ANOVA AdjPValue (Taylor)	ANOVA (Glinsky)	ANOVA AdjPValue (Glinsky)	ANOVA (Grasso)	ANOVA AdjPValue (Grasso)	ANOVA (TCGA)	ANOVA AdjPValue (TCGA)
+PTEN	1.39695469190758e-17	5.28574098374768e-09	1.5857222951243e-08	NA	NA	3.4353157167117e-15	1.03059471501351e-14	NA	NA
+SOX9	0.770947472234813	0.372314342224839	0.372314342224839	NA	NA	0.950851072717354	0.950851072717354	NA	NA
+PML	5.46347644092417e-05	0.00993279190107179	0.0148991878516077	NA	NA	0.000520414727445777	0.000780622091168665	NA	NA

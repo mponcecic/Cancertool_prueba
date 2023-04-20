@@ -1,0 +1,5 @@
+WARNING: Please, be careful with the local configuration, it MUST be in English format in order to avoid errors in the interpretation of the results. (Decimals must be separated by dots '.', and thousands by commas ',')
+GeneSymbol	Gleason p-Value (Taylor)	Gleason p-Value (Taylor)	Gleason Adj p-Value (Taylor)	Gleason p-Value (Glinsky)	Gleason Adj p-Value (Glinsky)	Gleason p-Value (Grasso)	Gleason Adj p-Value (Grasso)	Gleason p-Value (TCGA)	Gleason Adj p-Value (TCGA)
+PTEN	0.610361651540969	0.563107995760342	0.791804680687742	0.00425014890351786	0.0127504467105536	NA	NA	8.17287038150218e-07	2.45186111445065e-06
+SOX9	0.152353383326615	0.0856798018610065	0.257039405583019	0.123507255287669	0.185260882931504	NA	NA	2.26485772529823e-06	3.39728658794735e-06
+PML	0.362724110681929	0.791804680687742	0.791804680687742	0.547362009001076	0.547362009001076	NA	NA	0.000434384704053364	0.000434384704053364
